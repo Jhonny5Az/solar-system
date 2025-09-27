@@ -44,7 +44,7 @@ jobs:
             name: Mocha-Test-Result- ${{matrix.nodejs_version}} -  ${{matrix.operating_system}}
             path: test-results.xml
     code-coverage:
-        name: Unit Testing
+        name: Code Coverage
         runs-on: ubuntu-latest
         steps:
         
@@ -60,7 +60,7 @@ jobs:
           run: npm install
 
         - name: Unit Testing
-          run: npm run coverate
+          run: npm run coverage
         
         - name: Archive Test Results
           uses: actions/upload-artifact@v4
