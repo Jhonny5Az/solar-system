@@ -60,7 +60,7 @@ jobs:
           run: npm install
 
         - name: Unit Testing
-          run: npm coverate
+          run: npm run coverate
         
         - name: Archive Test Results
           uses: actions/upload-artifact@v4
