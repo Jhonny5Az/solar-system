@@ -65,7 +65,7 @@ jobs:
 
     code-coverage:
         name: Code Coverage
-        container:
+        container: # The steps are running in this container
           image: node:19
         services:
           mongo-db:
