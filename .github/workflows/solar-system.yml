@@ -54,13 +54,19 @@ jobs:
         - name: Unit Testing
           id: unit-test-nodejs
           run: npm test
+
+        - name: Output Name in matrix
+          run: |
+            jq -cn  --arg runner ${{ matrix.runner }} --arg outcome ${{ steps.main-step.outcome }} '$ARGS.named' > outcome
         
         - name: Archive Test Results
+          id: archive-test-results
           #if: failure() && (steps.unit-test-nodejs.outcome == 'failure' || steps.unit-test-nodejs.outcome == 'success')
           if: always()
           uses: actions/upload-artifact@v4
           with:
-            name: Mocha-Test-Result- ${{matrix.nodejs_version}} -  ${{matrix.operating_system}}
+            #name: Mocha-Test-Result-${{matrix.nodejs_version}}-${{matrix.operating_system}}
+            name: Mocha-Test-Result
             path: test-results.xml
 
     code-coverage:
@@ -116,7 +122,7 @@ jobs:
         - name: Download Mocha Test Artifact
           uses: actions/download-artifact@v5
           with:
-            name: Mocha-Test-Result- ${{matrix.nodejs_version}} -  ${{matrix.operating_system}}
+            name: Mocha-Test-Result
 
         - name: Download Code Coverage Artifact
           uses: actions/download-artifact@v5
