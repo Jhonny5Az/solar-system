@@ -221,6 +221,24 @@ jobs:
               ${{vars.DOCKERHUB_USERNAME}}/solar-system:${{github.sha}}            
               ghcr.io/${{ steps.convert_to_lowercase.outputs.LOWERCASE_VAR }}/solar-system:${{github.sha}}
 
+    slack-notification:
+      if: always()
+      name: Slack Notification
+      needs: [unit-testing, code-coverage] 
+      continue-on-error: true
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Slack Notification
+          uses: rtCamp/action-slack-notify@v2
+          env:
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_CHANNEL: github-actions-channel
+            SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+            SLACK_ICON: https://github.com/rtCamp.png?size=48
+            SLACK_MESSAGE: ':hammer_and_wrench Triggered by ${{github.actor}}'
+            SLACK_TITLE: Information
+
     dev-deploy:
       if: contains(github.ref, 'feature/')
       needs: docker
