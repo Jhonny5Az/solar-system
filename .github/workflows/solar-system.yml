@@ -55,9 +55,9 @@ jobs:
           id: unit-test-nodejs
           run: npm test
 
-        - name: Output Name in matrix
-          run: |
-            jq -cn  --arg runner ${{ matrix.runner }} --arg outcome ${{ steps.main-step.outcome }} '$ARGS.named' > outcome
+        # - name: Output Name in matrix
+        #   run: |
+        #     jq -cn  --arg runner ${{ matrix.runner }} --arg outcome ${{ steps.main-step.outcome }} '$ARGS.named' > outcome
         
         - name: Archive Test Results
           id: archive-test-results
