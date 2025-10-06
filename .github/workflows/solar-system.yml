@@ -115,6 +115,7 @@ jobs:
             retention-days: 5
 
     reports-s3:
+      environment: development
       needs: [code-coverage, unit-testing]
       runs-on: ubuntu-latest
       continue-on-error: true
